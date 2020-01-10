@@ -50,15 +50,4 @@ public class MqService {
         
 	}
 	
-	public static void main(String args[]) {
-		MqService mqService = new MqService();
-		try {
-			mqService.sendMessage("Hello 123");
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
 }
