@@ -1,5 +1,7 @@
 package com.microservice.ibmmq.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.microservice.ibmmq.service.Customer;
 import com.microservice.ibmmq.service.MqService;
 
 @RestController
@@ -19,20 +22,18 @@ public class IbmMqController {
 	@Autowired
 	private MqService msService;
 	
-	@PostMapping("/messages")
-	public ResponseEntity<String> postMessage(@RequestBody String message){
+	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE,
+			 value="/customers")
+	public ResponseEntity<Customer> postMessage(@RequestBody Customer customer){
 		
 		LOGGER.info("called postMessage");
-		String responseMessage = "";
 		try {
-			msService.sendMessage(message);
-			responseMessage = "Sent message ---"+message;
+			msService.sendMessage(customer);
 		}
 		catch(Exception e) {
-			responseMessage = "Error Sending message....";
+			LOGGER.error("", e);
 		}
-		
-		return ResponseEntity.ok(responseMessage);
+		return ResponseEntity.ok(customer);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.mq.jms.MQQueueConnectionFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 
@@ -17,7 +18,24 @@ public class MqService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MqService.class);
 
-	public void sendMessage(String message) throws Exception {
+//	public void sendMessage(String message) throws Exception {
+//		
+//		MQQueueConnectionFactory connFact = this.createConnectionFactory();
+//		
+//		Connection conn = connFact.createConnection();
+//        conn.start();
+//        
+//        Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+//        MessageProducer messageProducer = session.createProducer(session.createQueue("DEV.QUEUE.2"));
+//        
+//        messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+//        messageProducer.setTimeToLive(20*1000);
+//        
+//        messageProducer.send(session.createTextMessage(message));
+//        LOGGER.info("Message sent to IBM MQ Queue");
+//	}
+	
+public void sendMessage(Customer customer) throws Exception {
 		
 		MQQueueConnectionFactory connFact = this.createConnectionFactory();
 		
@@ -30,7 +48,10 @@ public class MqService {
         messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
         messageProducer.setTimeToLive(20*1000);
         
-        messageProducer.send(session.createTextMessage(message));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String messageText = objectMapper.writeValueAsString(customer);
+        
+        messageProducer.send(session.createTextMessage(messageText));
         LOGGER.info("Message sent to IBM MQ Queue");
 	}
 	
