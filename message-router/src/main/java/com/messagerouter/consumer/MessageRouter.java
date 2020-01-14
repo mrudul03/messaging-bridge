@@ -22,7 +22,6 @@ public class MessageRouter extends RouteBuilder {
 			@Override
 			public void process(Exchange exchange) throws Exception {
 				Customer customer = exchange.getIn().getBody(Customer.class);
-				log.info("Message.....:"+customer);
 			}
 		})
 		.marshal().json(JsonLibrary.Jackson)
