@@ -18,24 +18,7 @@ public class MqService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MqService.class);
 
-//	public void sendMessage(String message) throws Exception {
-//		
-//		MQQueueConnectionFactory connFact = this.createConnectionFactory();
-//		
-//		Connection conn = connFact.createConnection();
-//        conn.start();
-//        
-//        Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-//        MessageProducer messageProducer = session.createProducer(session.createQueue("DEV.QUEUE.2"));
-//        
-//        messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-//        messageProducer.setTimeToLive(20*1000);
-//        
-//        messageProducer.send(session.createTextMessage(message));
-//        LOGGER.info("Message sent to IBM MQ Queue");
-//	}
-	
-public void sendMessage(Customer customer) throws Exception {
+	public void sendMessage(Customer customer) throws Exception {
 		
 		MQQueueConnectionFactory connFact = this.createConnectionFactory();
 		
@@ -57,18 +40,15 @@ public void sendMessage(Customer customer) throws Exception {
 	
 	private MQQueueConnectionFactory createConnectionFactory() throws Exception {
 		// channel = DEV.ADMIN.SVRCONN
-		// QMGR
 		MQQueueConnectionFactory connFact = new MQQueueConnectionFactory();
-		connFact.setHostName("localhost");
+		connFact.setHostName("qmgr");
         connFact.setChannel("DEV.ADMIN.SVRCONN");
         connFact.setPort(1414);
-        connFact.setQueueManager("QMGR");
+        connFact.setQueueManager("QM1");
         connFact.setTransportType(1);
         connFact.setStringProperty(WMQConstants.USERID, "admin");
         connFact.setStringProperty(WMQConstants.PASSWORD, "passw0rd");
-		
-		return connFact;
-        
+        return connFact;
 	}
 	
 }

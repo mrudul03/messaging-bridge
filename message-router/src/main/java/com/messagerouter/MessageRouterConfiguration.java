@@ -11,7 +11,7 @@ import com.ibm.msg.client.wmq.WMQConstants;
 @Configuration
 public class MessageRouterConfiguration {
 	
-	String BROKER_URL = "tcp://localhost:61616"; 
+	String BROKER_URL = "tcp://activemq:61616"; 
 	String BROKER_USERNAME = "admin"; 
 	String BROKER_PASSWORD = "admin";
 	
@@ -54,10 +54,10 @@ public class MessageRouterConfiguration {
 	@Bean
 	public MQQueueConnectionFactory ibmMqConnectionFactory() throws Exception {
 		MQQueueConnectionFactory connFact = new MQQueueConnectionFactory();
-		connFact.setHostName("localhost");
+		connFact.setHostName("qmgr");
         connFact.setChannel("DEV.ADMIN.SVRCONN");
         connFact.setPort(1414);
-        connFact.setQueueManager("QMGR");
+        connFact.setQueueManager("QM1");
         connFact.setTransportType(1);
         connFact.setStringProperty(WMQConstants.USERID, "admin");
         connFact.setStringProperty(WMQConstants.PASSWORD, "passw0rd");
