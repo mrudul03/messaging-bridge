@@ -1,9 +1,12 @@
 ## Service to send messages to IBM MQ queue
 
+Compile the service
+
 ```
 mvn clean install
-java -jar target/message-router-0.0.1-SNAPSHOT.jar
 ```
+
+Dockerize
 
 ```
 docker build -t mrudul03/ibmmq-service:v01 .
